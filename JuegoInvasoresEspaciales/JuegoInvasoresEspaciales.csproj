@@ -94,5 +94,17 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\invader1.gif" />
+    <Resource Include="images\invader2.gif" />
+    <Resource Include="images\invader3.gif" />
+    <Resource Include="images\invader4.gif" />
+    <Resource Include="images\invader5.gif" />
+    <Resource Include="images\invader6.gif" />
+    <Resource Include="images\invader7.gif" />
+    <Resource Include="images\invader8.gif" />
+    <Resource Include="images\player.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

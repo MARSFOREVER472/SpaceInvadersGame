@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JuegoInvasoresEspaciales"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Juego Invasores Espaciales" Height="500" Width="800">
+    <Canvas Name="myCanvas" Focusable ="True" Background="Black" KeyDown="KeyIsDown" KeyUp="KeyIsUp">
+
+        <Label Name="enemigosRestantes" Foreground="Orange" FontSize="14" FontWeight="Bold">Enemigos Restantes : 0</Label>
+
+        <Rectangle Name="player" Fill="White" Height="65" Width="55" Canvas.Left="375" Canvas.Top="415"></Rectangle>
         
-    </Grid>
+    </Canvas>
 </Window>
