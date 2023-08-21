@@ -89,13 +89,27 @@ namespace JuegoInvasoresEspaciales
             // Ejecuta la función de crear enemigos y decirle que cree 30 enemigos.
 
             crearEnemigos(30);
+
+            // Ejecuta el Canvas principal (Cuadro del juego).
+
+            myCanvas.Focus();
         }
 
         // Método especial para el despachador del temporizador.
 
         private void GameLoop(object sender, EventArgs e)
         {
-            // EN INSTANTES...
+            // Vamos a hacer un método de ejecución de prueba para el jugador.
+
+            if (izquierda == true && Canvas.GetLeft(player) > 0) // Cuando el jugador se mueve hacia la izquierda.
+            {
+                Canvas.SetLeft(player, Canvas.GetLeft(player) - 10); // El personaje puede mover la distancia dentro del cuadro del juego.
+            }
+
+            if (derecha == true && Canvas.GetLeft(player) + 80 < Application.Current.MainWindow.Width) // Cuando el jugador se mueve hacia la derecha.
+            {
+                Canvas.SetLeft(player, Canvas.GetLeft(player) + 10); // El personaje puede mover la distancia dentro del cuadro del juego.
+            }
         }
 
         // Método que permite al usuario presionando una tecla.
