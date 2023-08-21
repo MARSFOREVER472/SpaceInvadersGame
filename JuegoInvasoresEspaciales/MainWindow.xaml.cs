@@ -62,6 +62,40 @@ namespace JuegoInvasoresEspaciales
         public MainWindow()
         {
             InitializeComponent();
+
+            // Le agregaremos algunos componentes a la ventana principal del juego.
+
+            // Vamos a configurar el temporizador y algunos eventos.
+            // Asimismo, también vamos a vincular el temporizador del despachador a un evento llamado "GameLoop".
+
+            dispatcherTimer.Tick += GameLoop;
+
+            // Con este temporizador se ejecutará cada 20 milisegundos.
+
+            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(20);
+
+            //  Inicializa el temporizador.
+
+            dispatcherTimer.Start();
+
+            // Se cargan las imágenes del jugador desde la carpeta de imágenes.
+
+            aparienciaJugador.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/player.png"));
+
+            //  Asigna la nueva apariencia del jugador al rectángulo.
+
+            player.Fill = aparienciaJugador;
+
+            // Ejecuta la función de crear enemigos y decirle que cree 30 enemigos.
+
+            crearEnemigos(30);
+        }
+
+        // Método especial para el despachador del temporizador.
+
+        private void GameLoop(object sender, EventArgs e)
+        {
+
         }
 
         // Método que permite al usuario presionando una tecla.
