@@ -95,21 +95,43 @@ namespace JuegoInvasoresEspaciales
 
         private void GameLoop(object sender, EventArgs e)
         {
-
+            // EN INSTANTES...
         }
 
         // Método que permite al usuario presionando una tecla.
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
-            // EN INSTANTES...
+            // En un proyecto con WPF hay que tener en cuenta que el evento de presionar y soltar una tecla a la vez el tipo de variable tendría que ser "Key".
+
+            // Cuando se presiona una tecla.
+
+            if (e.Key == Key.Left) // Al presionar una tecla del lado izquierdo.
+            {
+                izquierda = true; // Va hacia la izquierda.
+            }
+
+            if (e.Key == Key.Right) // Al presionar una tecla del lado derecho.
+            {
+                derecha = true; // Va hacia la derecha.
+            }
         }
 
         // Método que permite al usuario soltando una tecla.
 
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
-            // EN INSTANTES...
+            // Cuando suelta una tecla.
+
+            if (e.Key == Key.Left) // Cuando suelta la tecla del lado izquierdo.
+            {
+                izquierda = false; // No va hacia la izquierda.
+            }
+
+            if (e.Key == Key.Right) // Cuando suelta una tecla del lado derecho.
+            {
+                derecha = false; // No va hacia la derecha.
+            }
         }
 
         // Ahora crearemos varios métodos adicionales para que el usuario pueda interactuar con el juego en general.
