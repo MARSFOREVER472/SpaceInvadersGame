@@ -110,6 +110,17 @@ namespace JuegoInvasoresEspaciales
             {
                 Canvas.SetLeft(player, Canvas.GetLeft(player) + 10); // El personaje puede mover la distancia dentro del cuadro del juego.
             }
+
+            // Ejecución especial para las balas del enemigo.
+
+            temporizadorBala -= 3; // Las balas del enemigo se lanzarán durante cada 3 segundos.
+
+            if (temporizadorBala < 0)
+            {
+                crearBalasEnemigo(Canvas.GetLeft(player) + 20, 10); // Se posicionarán hacia el jugador cuando el enemigo se lanza una bala.
+
+                temporizadorBala = limiteTemporizadorBala; // Será su tiempo límite al lanzar cada 3 segundos la bala.
+            }
         }
 
         // Método que permite al usuario presionando una tecla.
@@ -146,13 +157,56 @@ namespace JuegoInvasoresEspaciales
             {
                 derecha = false; // No va hacia la derecha.
             }
+
+            // El algoritmo sería algo muy especial para el jugador cuando suelta la tecla de espacio..
+
+            if (e.Key == Key.Space)
+            {
+                Rectangle nuevaBala = new Rectangle // Se crearán las balas para el jugador con sus respectivos atributos..
+                {
+                    Tag = "bala", // Para las balas.
+                    Height = 20, // 20 metros de altura para las balas.
+                    Width = 5, // El ancho de las balas son de 5 cm.
+                    Fill = Brushes.DarkRed, // Las balas se pintarán de color rojo oscuro.
+                    Stroke = Brushes.DarkOrange // Cuando se colisionan con algo lo de las balas estarán de color naranjo oscuro.
+
+                };
+
+                // Ahora con todos estos atributos lo posicionaremos mediante un Canvas.
+
+                Canvas.SetTop(nuevaBala, Canvas.GetTop(player) - nuevaBala.Height); // Posición vertical del jugador con las balas mediante Canvas.
+                Canvas.SetLeft(nuevaBala, Canvas.GetLeft(player) + player.Width / 2); // Posición horizontal del jugador con las balas mediante Canvas.
+
+                // Se añadirán las balas para el jugador.
+
+                myCanvas.Children.Add(nuevaBala);
+            }
         }
 
         // Ahora crearemos varios métodos adicionales para que el usuario pueda interactuar con el juego en general.
 
         private void crearBalasEnemigo(double x, double y) // Las balas del enemigo se definen mediante posiciones en x e y.
         {
-            // EN INSTANTES...
+            // Haremos lo mismo pero esta vez habrán algunas modificaciones para el enemigo.
+
+            Rectangle balasEnemigo = new Rectangle // Se crearán los atributos para las balas del enemigo.
+            {
+                Tag = "balaEnemigo", // Nombre de la bala para el enemigo.
+                Height = 40, // La altura de la bala del enemigo será más grande que la del jugador.
+                Width = 15, // El ancho será lo mismo para el enemigo.
+                Fill = Brushes.DarkOrange, // El color de éstas será de color naranjo oscuro.
+                Stroke = Brushes.Black, // Cuando se colisionan, éstas cambiarán de color para las balas del enemigo.
+                StrokeThickness = 5 // Intervalo de distancia al colisionar con las balas para el enemigo.
+            };
+
+            // Con esto posicionaremos las balas del enemigo mediante un Canvas de manera horizontal y vertical, según sea el caso.
+
+            Canvas.SetTop(balasEnemigo, y); // Posición vertical de la bala del enemigo mediante Canvas.
+            Canvas.SetLeft(balasEnemigo, x); // Posición horizontal de la bala del enemigo mediante Canvas.
+
+            // Se crearán las balas para el enemigo.
+
+            myCanvas.Children.Add(balasEnemigo);
         }
 
         private void crearEnemigos(int limite) // Tiene que tener una cantidad máxima de enemigos mediante un límite.
