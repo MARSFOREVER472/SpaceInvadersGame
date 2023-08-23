@@ -151,6 +151,14 @@ namespace JuegoInvasoresEspaciales
                 if (x is Rectangle && (string)x.Tag == "enemigo")
                 {
                     Canvas.SetLeft(x, Canvas.GetLeft(x) + velocidadEnemigo);
+
+                    // Trataremos de que los enemigos se puedan desplazar por toda la ventana del juego moviéndose de izquierda a derecha.
+
+                    if (Canvas.GetLeft(x) > 820)
+                    {
+                        Canvas.SetLeft(x, -80); // De izquierda a derecha.
+                        Canvas.SetTop(x, Canvas.GetTop(x) + (x.Height + 10)); // De arriba hacia abajo.
+                    }
                 }
             }
         }
