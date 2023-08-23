@@ -101,6 +101,10 @@ namespace JuegoInvasoresEspaciales
         {
             // Vamos a hacer un método de ejecución de prueba para el jugador.
 
+            // Haremos que el jugador colisione con algo para efectos posteriores.
+
+            Rect playerHitBox = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+
             if (izquierda == true && Canvas.GetLeft(player) > 0) // Cuando el jugador se mueve hacia la izquierda.
             {
                 Canvas.SetLeft(player, Canvas.GetLeft(player) - 10); // El personaje puede mover la distancia dentro del cuadro del juego.
@@ -129,6 +133,24 @@ namespace JuegoInvasoresEspaciales
                 if (x is Rectangle && (string)x.Tag == "bala")
                 {
                     Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+
+                    // Faltaba un cambio más al programa...
+
+                    if (Canvas.GetTop(x) < 10)
+                    {
+                        elementosAEliminar.Add(x);
+                    }
+
+                    // Haremos que la bala pueda colisionarse por sí sola con el enemigo o el jugador.
+
+                    Rect bala = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                }
+
+                // Agregaremos animaciones para cada enemigo.
+
+                if (x is Rectangle && (string)x.Tag == "enemigo")
+                {
+                    Canvas.SetLeft(x, Canvas.GetLeft(x) + velocidadEnemigo);
                 }
             }
         }
