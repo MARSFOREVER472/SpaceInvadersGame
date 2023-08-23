@@ -121,6 +121,16 @@ namespace JuegoInvasoresEspaciales
 
                 temporizadorBala = limiteTemporizadorBala; // Será su tiempo límite al lanzar cada 3 segundos la bala.
             }
+
+            // Sprint final...
+
+            foreach (var x in myCanvas.Children.OfType<Rectangle>())
+            {
+                if (x is Rectangle && (string)x.Tag == "bala")
+                {
+                    Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+                }
+            }
         }
 
         // Método que permite al usuario presionando una tecla.
@@ -211,9 +221,113 @@ namespace JuegoInvasoresEspaciales
 
         private void crearEnemigos(int limite) // Tiene que tener una cantidad máxima de enemigos mediante un límite.
         {
-            // EN INSTANTES...
+            // Ahora sí vamos a hacer que los enemigos estén en el juego automáticamente.
+
+            // Se crea un entero local llamado "left" y se establecerá inicialmente en 0.
+
+            int left = 0;
+
+            // Guarda el valor límite de los enemigos como el valor total de ellos mismos.
+
+            totalEnemigos = limite;
+
+            // Este es el bucle "for" que creará todos los enemigos de este juego.
+            // Si el límite de los enemigos se establece en 10, este bucle se ejecutará 10 veces, si se establece en 20, luego 20 veces, y así sucesivamente.
+
+            for (int i = 0; i < limite; i++)
+            {
+                // Con cada ciclo...
+                // ... se creará un nuevo pincel de imagen de apariencia del enemigo para usarlo con el rectángulo del mismo.
+
+                ImageBrush aparienciaEnemigo = new ImageBrush();
+
+                // 1.- Se crea un nuevo rectángulo llamado "newEnemy".
+                // 2.- Dentro de este rectángulo se establecerán las propiedades para etiquetar al enemigo con 45 * 45 de altura y de ancho, respectivamente, y vincular la apariencia del enemigo como relleno.
+
+                Rectangle newEnemy = new Rectangle
+                {
+                    Tag = "enemigo",
+                    Height = 45,
+                    Width = 45,
+                    Fill = aparienciaEnemigo,
+                };
+
+                // Se establece la ubicación inicial para los invasores espaciales.
+
+                Canvas.SetTop(newEnemy, 10); // Posición vertical del enemigo dentro del Canvas.
+                Canvas.SetLeft(newEnemy, left); // Posición horizontal del enemigo dentro del Canvas.
+
+                // Se añadirá a cada enemigo en la escena.
+
+                myCanvas.Children.Add(newEnemy);
+
+                // Se cambiará a -60 la posición del enemigo de manera horizontal.
+
+                left -= 60;
+
+                // Se incrementa en 1 al entero de la imagen del enemigo.
+
+                imagenesEnemigo++;
+
+                // 1.- Si el número entero de imágenes del enemigo supera a 8 imágenes.
+                // 2.- Luego volvemos a establecer el entero en 1.
+
+                if (imagenesEnemigo > 8)
+                {
+                    imagenesEnemigo = 1;
+                }
+
+                // 1.- La declaración "switch" a continuación se verificará el entero de imágenes del enemigo.
+                // 2.- A cada número se le asignará una nueva apariencia al enemigo.
+                // 3.- Con esta declaración se ejecutará a lo largo del bucle y nos ayudará a hacer uso de las imágenes del invasor espacial que importamos anteriormente.
+                // 4.- Con esto buscará en qué número está en el entero de las imágenes del enemigo y luego se asignará a esa imagen a esa clase y luego se romperá el bucle.
+
+                switch (imagenesEnemigo)
+                {
+                    case 1:
+                        aparienciaEnemigo.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/invader1.gif"));
+                        // Si el número de imágenes del enemigo aparece como 1, podemos cambiar la fuente de la imagen al archivo GIF del invasor 1.
+                        break;
+
+                    case 2:
+                        aparienciaEnemigo.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/invader2.gif"));
+                        // Si el número de imágenes del enemigo aparece como 2, podemos cambiar la fuente de la imagen al archivo GIF del invasor 2.
+                        break;
+
+                    case 3:
+                        aparienciaEnemigo.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/invader3.gif"));
+                        // Si el número de imágenes del enemigo aparece como 3, podemos cambiar la fuente de la imagen al archivo GIF del invasor 3.
+                        break;
+
+                    case 4:
+                        aparienciaEnemigo.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/invader4.gif"));
+                        // Si el número de imágenes del enemigo aparece como 4, podemos cambiar la fuente de la imagen al archivo GIF del invasor 4.
+                        break;
+
+                    case 5:
+                        aparienciaEnemigo.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/invader5.gif"));
+                        // Si el número de imágenes del enemigo aparece como 5, podemos cambiar la fuente de la imagen al archivo GIF del invasor 5.
+                        break;
+
+                    case 6:
+                        aparienciaEnemigo.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/invader6.gif"));
+                        // Si el número de imágenes del enemigo aparece como 6, podemos cambiar la fuente de la imagen al archivo GIF del invasor 6.
+                        break;
+
+                    case 7:
+                        aparienciaEnemigo.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/invader7.gif"));
+                        // Si el número de imágenes del enemigo aparece como 7, podemos cambiar la fuente de la imagen al archivo GIF del invasor 7.
+                        break;
+
+                    case 8:
+                        aparienciaEnemigo.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/invader8.gif"));
+                        // Si el número de imágenes del enemigo aparece como 8, podemos cambiar la fuente de la imagen al archivo GIF del invasor 8.
+                        break;
+                }
+
+            }
         }
-        
+
         private void mostrarFinDelJuego(string mensaje) // El fin del juego se desplegará mediante una ventana de mensaje.
         {
             // EN INSTANTES...
