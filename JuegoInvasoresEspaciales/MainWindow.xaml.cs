@@ -86,9 +86,9 @@ namespace JuegoInvasoresEspaciales
 
             player.Fill = aparienciaJugador;
 
-            // Ejecuta la función de crear enemigos y decirle que cree 30 enemigos.
+            // Ejecuta la función de crear enemigos y decirle que cree 50 enemigos.
 
-            crearEnemigos(30);
+            crearEnemigos(50);
 
             // Ejecuta el Canvas principal (Cuadro del juego).
 
@@ -104,6 +104,10 @@ namespace JuegoInvasoresEspaciales
             // Haremos que el jugador colisione con algo para efectos posteriores.
 
             Rect playerHitBox = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+
+            // Nuevo texto cuando le quedan la cantidad total de enemigos.
+
+            enemigosRestantes.Content = "Enemigos restantes: " + totalEnemigos;
 
             if (izquierda == true && Canvas.GetLeft(player) > 0) // Cuando el jugador se mueve hacia la izquierda.
             {
@@ -144,6 +148,23 @@ namespace JuegoInvasoresEspaciales
                     // Haremos que la bala pueda colisionarse por sí sola con el enemigo o el jugador.
 
                     Rect bala = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
+                    // Por cada enemigo del rectángulo para que el jugador se interactúa en ella, se debe utilizar la iteración "foreach".
+
+                    foreach (var y in myCanvas.Children.OfType<Rectangle>())
+                    {
+                        if (y is Rectangle && (string)y.Tag == "enemigo") // Si "y" es cada enemigo del juego.
+                        {
+                            Rect colisionEnemigo = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+
+                            if (bala.IntersectsWith(colisionEnemigo)) // Cuando la bala colisiona al enemigo.
+                            {
+                                elementosAEliminar.Add(x); // Para la bala.
+                                elementosAEliminar.Add(y); // Para el enemigo.
+                                totalEnemigos -= 1; // Elimina a 1 el número total de enemigos cuando cumple con esta condición.
+                            }
+                        }
+                    }
                 }
 
                 // Agregaremos animaciones para cada enemigo.
@@ -159,7 +180,55 @@ namespace JuegoInvasoresEspaciales
                         Canvas.SetLeft(x, -80); // De izquierda a derecha.
                         Canvas.SetTop(x, Canvas.GetTop(x) + (x.Height + 10)); // De arriba hacia abajo.
                     }
+
+                    // Llamaremos a una nueva variable de tipo Rect para que el enemigo dispare cada balazo a la vez.
+
+                    Rect colisionEnemigo = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
+                    // Luego, Haremos que el jugador pueda interactuar con las colisiones hacia algunos enemigos.
+
+                    if (playerHitBox.IntersectsWith(colisionEnemigo))
+                    {
+                        mostrarFinDelJuego(" Fuiste asesinado por los invasores del BANCO DEL ESTADO DE CHILE !! ");
+                    }
                 }
+
+                // Para que cada enemigo pueda disparar con una de sus balas, utilizaremos el siguiente algoritmo.
+
+                if (x is Rectangle && (string)x.Tag == "balaEnemigo")
+                {
+                    Canvas.SetTop(x, Canvas.GetTop(x) + 10);
+
+                    // Con esto puede hacer que desde arriba se lograron disparar con las balas automáticamente en el juego.
+
+                    if (Canvas.GetTop(x) > 480)
+                    {
+                        elementosAEliminar.Add(x);
+                    }
+
+                    Rect balasEnemigo = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
+                    // Luego, Haremos que el jugador pueda interactuar con las colisiones hacia algunos enemigos.
+
+                    if (playerHitBox.IntersectsWith(balasEnemigo))
+                    {
+                        mostrarFinDelJuego(" Fuiste asesinado brutalmente por las balas tipo 'TECTOR' de cada enemigo!! ");
+                    }
+                }
+            }
+
+            // Ahora lo vamos a hacer con cada enemigo en el juego que dispare con sus propias balas.
+
+            foreach (Rectangle i in elementosAEliminar)
+            {
+                myCanvas.Children.Remove(i);
+            }
+
+            // Ahora, con este proceso se va a complejizar un poco más cuando son menos que 10 enemigos.
+
+            if (totalEnemigos < 10) // Si el número total de enemigos es menor a 10.
+            {
+                velocidadEnemigo = 12; // Su velocidad puede aumentar frecuentemente.
             }
         }
 
