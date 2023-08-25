@@ -16,4 +16,4 @@ Objetivos para esta lección:
 - Determinar cómo ganar o perder el juego.
 - Cambiar la velocidad del enemigo durante el tiempo de ejecución.
 - Disparar al objeto del jugador con balas aleatorias para hacer que el juego sea más interesante y desafiante.
-- Use el temporizador del despachador para crear el motor principal del juego con todas las reglas y la lógica.
+- Usar el temporizador del despachador para crear el motor principal del juego con todas las reglas y la lógica.
