@@ -57,7 +57,11 @@ namespace JuegoInvasoresEspaciales
 
         // Velocidad del enemigo por defecto.
 
-        int velocidadEnemigo = 6;
+        int velocidadEnemigo = 10;
+
+        // Si finaliza o no la partida.
+
+        bool gameOver = false;
 
         public MainWindow()
         {
@@ -230,6 +234,13 @@ namespace JuegoInvasoresEspaciales
             {
                 velocidadEnemigo = 12; // Su velocidad puede aumentar frecuentemente.
             }
+
+            // Cuando gana la partida de parte del jugador...
+
+            if (totalEnemigos < 1)
+            {
+                mostrarFinDelJuego(" Felicidades, has salvado el planeta!!! ");
+            }
         }
 
         // Método que permite al usuario presionando una tecla.
@@ -289,6 +300,14 @@ namespace JuegoInvasoresEspaciales
                 // Se añadirán las balas para el jugador.
 
                 myCanvas.Children.Add(nuevaBala);
+            }
+
+            // Para finalizar el proceso, haremos que el juego entre contacto con la tecla ENTER para reiniciar el juego.
+
+            if (e.Key == Key.Enter && gameOver == true)
+            {
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
             }
         }
 
@@ -429,7 +448,12 @@ namespace JuegoInvasoresEspaciales
 
         private void mostrarFinDelJuego(string mensaje) // El fin del juego se desplegará mediante una ventana de mensaje.
         {
-            // EN INSTANTES...
+            // Crearemos un método mucho más simple para finalizar por completo la partida.
+
+            gameOver = true; // Finalizará la partida en este método.
+            dispatcherTimer.Stop(); // Paraliza el temporizador.
+            enemigosRestantes.Content += " " + mensaje + " Pulsa ENTER para jugar otra partida ";
+            
         }
 
 
